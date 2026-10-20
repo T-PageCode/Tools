@@ -8,7 +8,7 @@
 **本项目非 AI 生成，但用 AI 来 Code Review 和 查Bug。**
 
 ## ⭐ 功能特性
-1. **完美截获 *FileNotFoundError* 、 *SyntaxError* 、以及 *Exception* 捕获其他错误。**
+1. **完美截获 *FileNotFoundError* 、 *SyntaxError* 、*ValueError* 以及 *Exception* 捕获其他错误。**
 2. **整整 5 款工具，写入、读取、追加、编码、解码等常用操作统一在这个小工具里面进行。**
 3. **纯原生命令行，速度远比图形界面快。**
 
