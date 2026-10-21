@@ -1,4 +1,5 @@
 import ast # 导入 ast 模块，用于解码时转换
+import os # 导入 os 模块，用于删除文件
 print("==== T-PageCode Tools ====")
 def write_file(): # 定义写入文件工具函数
     try:
@@ -65,8 +66,34 @@ def decode():
         print(f"解码成功！内容：{decoded_content}") # 同理，但显示的是解码后的内容
     except ValueError: # 判断 ValueError 错误，如输入的数字过大或过小
         print("你输入的数字好像有问题，请重新输入合法的数字。")
+
     except SyntaxError: # 判断 SyntaxError 错误，如输入了字母或其他字符
         print("你输入的文本好像存在错误，请输入列表形式的数字重试。")
+
+    except Exception as catcherror:
+        print(f"遇到了错误：{catcherror}")
+
+def delete():
+    try:
+        print("==== 工具：TPC文件删除 ====")
+        print("请输入你的文件路径。").replace(" ", "") # 防手滑
+        filepath = input(">>> ")
+        print("警告：文件会被永久删除，无法恢复！你确定删除此文件吗？") # 警告
+        delask = input(">>> ") # 确认
+        if delask == "确定":
+            os.remove(filepath) # 删除文件
+
+        if delask == "取消":
+            print("取消成功！")
+        else:
+            print("你好像输入了无效内容，请重新输入。")
+
+    except FileNotFoundError:
+        print(f"你的路径（{filepath}）可能存在错误，请检查后重试。")
+
+    except PermissionError:
+        print("文件正在被占用，请结束相关进程重试。") # 文件占用提示
+        
     except Exception as catcherror:
         print(f"遇到了错误：{catcherror}")
 
@@ -78,9 +105,11 @@ def exit_tools():
     if ask == "确定":
         print("正在退出，感谢你的使用！")
         return "exit" # exit 字符串来给 if 传递信息，但不是 Python 的 exit 函数
+
     elif ask == "取消":
         print("取消成功！")
         return "none" # 返回 none，elif 里会直接忽略，但不是 Python 的 None 函数
+
     else: # else 为前面的判断都不是的时候进行的最终判断
         print("你好像输入了无效内容，请重新输入。") # 打印容错提示
         return "none" # 同理
@@ -88,7 +117,7 @@ def exit_tools():
 # 通过 while True 无限循环来实现程序循环运行
 while True:
     # print 提示
-    print("请输入1 ~ 6数字来进行以下操作：\n1.写入文件\n2.读取文件\n3.追加文件\n4.编码\n5.解码\n6.退出")
+    print("请输入1 ~ 6数字来进行以下操作：\n1.写入文件\n2.读取文件\n3.追加文件\n4.编码\n5.解码\n6.删除\n7.退出")
     input_number = input(">>> ").replace(" ","") # 防手滑同理
     # 接下来开始一个一个的判断
     if input_number == "1":
@@ -105,8 +134,10 @@ while True:
 
     elif input_number == "5":
         decode()
-    
     elif input_number == "6":
+        delete()
+
+    elif input_number == "7":
         if exit_tools() == "exit":
             break # 终止 while True 循环，等于退出程序
 
